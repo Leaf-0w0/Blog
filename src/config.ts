@@ -98,13 +98,13 @@ export const siteConfig: SiteConfig = {
 	// 壁纸模式配置
 	wallpaperMode: {
 		// 默认壁纸模式：fullscreen=全屏壁纸，none=无壁纸
-		defaultMode: "fullscreen",
+		defaultMode: "none",
 		// 整体布局方案切换按钮显示设置（默认："desktop"）
 		// "off" = 不显示
 		// "mobile" = 仅在移动端显示
 		// "desktop" = 仅在桌面端显示
 		// "both" = 在所有设备上显示
-		showModeSwitchOnMobile: "desktop",
+		showModeSwitchOnMobile: "off",
 		// 导航栏透明模式："semi" 半透明加圆角，"full" 完全透明，"semifull" 动态透明
 		navbarTransparentMode: "semifull",
 	},
@@ -532,4 +532,3 @@ export const widgetConfigs = {
 	randomPosts: randomPostsConfig,
 } as const;
 
-// umamiConfig相关配置已移动至astro.config.mjs中,统计脚本请自行在Layout.astro文件的<head>中插入
