@@ -191,162 +191,6 @@ function getAsciiCharset() {
 	return text;
 }
 
-// 获取 Meting API 歌单数据中的文字
-async function fetchMetingPlaylistText() {
-	try {
-		// 读取配置文件获取音乐播放器配置
-		const configPath = path.join(__dirname, "../src/config.ts");
-		const configContent = fs.readFileSync(configPath, "utf-8");
-
-		// 检查音乐播放器是否启用
-		const enableMatch = configContent.match(
-			/musicPlayerConfig:\s*MusicPlayerConfig\s*=\s*\{[\s\S]*?enable:\s*(true|false)/,
-		);
-		if (!enableMatch || enableMatch[1] === "false") {
-			console.log(
-				"ℹ Music player disabled, skipping Meting API text collection",
-			);
-			return new Set();
-		}
-
-		// 提取音乐播放器配置（使用默认值，因为配置可能不完整）
-		// 在实际的音乐播放器组件中，如果配置中没有指定模式，默认使用 "meting"
-		const musicConfigMatch = configContent.match(
-			/musicPlayerConfig:\s*MusicPlayerConfig\s*=\s*\{([\s\S]*?)\}/,
-		);
-		let mode = "meting"; // 默认模式
-		let meting_api =
-			"https://www.bilibili.uno/api?server=:server&type=:type&id=:id&auth=:auth&r=:r";
-		let meting_id = "14164869977";
-		let meting_server = "netease";
-		let meting_type = "playlist";
-
-		if (musicConfigMatch) {
-			const configStr = musicConfigMatch[1];
-
-			const modeMatch = configStr.match(/mode:\s*["']([^"']+)["']/);
-			if (modeMatch) {
-				mode = modeMatch[1];
-			}
-
-			const apiMatch = configStr.match(/meting_api:\s*["']([^"']+)["']/);
-			if (apiMatch) {
-				meting_api = apiMatch[1];
-			}
-
-			const idMatch = configStr.match(/id:\s*["']([^"']+)["']/);
-			if (idMatch) {
-				meting_id = idMatch[1];
-			}
-
-			const serverMatch = configStr.match(/server:\s*["']([^"']+)["']/);
-			if (serverMatch) {
-				meting_server = serverMatch[1];
-			}
-
-			const typeMatch = configStr.match(/type:\s*["']([^"']+)["']/);
-			if (typeMatch) {
-				meting_type = typeMatch[1];
-			}
-		}
-
-		if (mode !== "meting") {
-			console.log(
-				'ℹ Music player mode is not "meting", skipping API text collection',
-			);
-			return new Set();
-		}
-
-		// 构建 API URL
-		const apiUrl = meting_api
-			.replace(":server", meting_server)
-			.replace(":type", meting_type)
-			.replace(":id", meting_id)
-			.replace(":auth", "")
-			.replace(":r", Date.now().toString());
-
-		console.log("ℹ Fetching music playlist from Meting API...");
-		console.log(`  URL: ${apiUrl}`);
-
-		// 设置请求超时
-		const controller = new AbortController();
-		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10秒超时
-
-		const textSet = new Set();
-
-		try {
-			const response = await fetch(apiUrl, {
-				signal: controller.signal,
-				headers: {
-					"User-Agent":
-						"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-				},
-			});
-			clearTimeout(timeoutId);
-
-			if (!response.ok) {
-				throw new Error(
-					`HTTP ${response.status}: ${response.statusText}`,
-				);
-			}
-
-			const playlist = await response.json();
-
-			if (!Array.isArray(playlist)) {
-				throw new Error("API response is not an array");
-			}
-
-			console.log(
-				`✓ Successfully fetched ${playlist.length} songs from Meting API`,
-			);
-
-			// 提取歌曲信息中的文字
-			let songCount = 0;
-			playlist.forEach((song) => {
-				const title = song.name ?? song.title ?? "";
-				const artist = song.artist ?? song.author ?? "";
-
-				// 只处理有效的歌曲信息
-				if (title.trim() || artist.trim()) {
-					songCount++;
-
-					// 添加歌名中的字符
-					for (const char of title) {
-						textSet.add(char);
-					}
-
-					// 添加歌手名中的字符
-					for (const char of artist) {
-						textSet.add(char);
-					}
-				}
-			});
-			if (songCount === 0) {
-				console.log("⚠ No valid song data found in API response");
-			}
-		} catch (fetchError) {
-			clearTimeout(timeoutId);
-
-			if (fetchError.name === "AbortError") {
-				console.log(
-					"⚠ Meting API request timeout (10s), skipping music text collection",
-				);
-			} else {
-				console.log(
-					`⚠ Failed to fetch Meting API data: ${fetchError.message}, skipping music text collection`,
-				);
-			}
-		}
-
-		return textSet;
-	} catch (error) {
-		console.log(
-			`⚠ Error processing Meting API config: ${error.message}, skipping music text collection`,
-		);
-		return new Set();
-	}
-}
-
 // 获取 Bangumi API 番剧数据中的文字
 async function fetchBangumiAnimeText() {
 	try {
@@ -637,59 +481,7 @@ async function collectText() {
 		}
 	});
 
-	// 2. 读取音乐播放器本地播放列表 constants 文件
-	const musicConstantsFile = path.join(
-		__dirname,
-		"../src/components/widgets/music-player/constants.ts",
-	);
-	if (fs.existsSync(musicConstantsFile)) {
-		const content = fs.readFileSync(musicConstantsFile, "utf-8");
-
-		const patterns = [
-			/"([^"\\]|\\.|\\n|\\t)*"/g,
-			/'([^'\\]|\\.|\\n|\\t)*'/g,
-			/`([^`\\]|\\.|\\n|\\t)*`/g,
-		];
-
-		patterns.forEach((pattern) => {
-			const matches = content.match(pattern);
-			if (matches) {
-				matches.forEach((match) => {
-					let text = match;
-
-					if (
-						(text.startsWith('"') && text.endsWith('"')) ||
-						(text.startsWith("'") && text.endsWith("'")) ||
-						(text.startsWith("`") && text.endsWith("`"))
-					) {
-						text = text.slice(1, -1);
-					}
-
-					text = text
-						.replace(/\\n/g, "\n")
-						.replace(/\\t/g, "\t")
-						.replace(/\\"/g, '"')
-						.replace(/\\'/g, "'");
-
-					for (const char of text) {
-						textSet.add(char);
-					}
-				});
-			}
-		});
-
-		const stringMatches = content.match(/["'`]([^"'`]+)["'`]/g);
-		if (stringMatches) {
-			stringMatches.forEach((match) => {
-				const text = match.slice(1, -1);
-				for (const char of text) {
-					textSet.add(char);
-				}
-			});
-		}
-	}
-
-	// 3. 读取 src/config.ts 文件
+	// 2. 读取 src/config.ts 文件
 	const configFile = path.join(__dirname, "../src/config.ts");
 	if (fs.existsSync(configFile)) {
 		const content = fs.readFileSync(configFile, "utf-8");
@@ -747,7 +539,7 @@ async function collectText() {
 		}
 	}
 
-	// 4. 读取对应语言的 i18n 文件
+	// 3. 读取对应语言的 i18n 文件
 	const i18nFile = path.join(__dirname, `../src/i18n/languages/${lang}.ts`);
 	if (fs.existsSync(i18nFile)) {
 		const content = fs.readFileSync(i18nFile, "utf-8");
@@ -799,7 +591,7 @@ async function collectText() {
 		}
 	}
 
-	// 5. 读取 content 目录（根据环境变量决定路径）
+	// 4. 读取 content 目录（根据环境变量决定路径）
 	let contentDir;
 	if (process.env.ENABLE_CONTENT_SYNC === "true" && process.env.CONTENT_DIR) {
 		// 使用环境变量指定的目录（以项目根目录为基准）
@@ -850,21 +642,7 @@ async function collectText() {
 		textSet.add(char);
 	}
 
-	// 6. 从 Meting API 获取歌单数据中的文字
-	const metingTextSet = await fetchMetingPlaylistText();
-
-	// 将 Meting API 的文字添加到主文字集合中
-	for (const char of metingTextSet) {
-		textSet.add(char);
-	}
-
-	if (metingTextSet.size > 0) {
-		console.log(
-			`✓ Added ${metingTextSet.size} unique characters from music playlist`,
-		);
-	}
-
-	// 7. 从 Bangumi API 获取番剧数据中的文字
+	// 5. 从 Bangumi API 获取番剧数据中的文字
 	const bangumiTextSet = await fetchBangumiAnimeText();
 
 	// 将 Bangumi API 的文字添加到主文字集合中

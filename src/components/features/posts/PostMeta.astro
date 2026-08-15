@@ -10,6 +10,7 @@ import { Category } from "./atoms";
 import { WordCount } from "./atoms";
 import { ReadingTime } from "./atoms";
 import { EncryptedBadge } from "./atoms";
+import PageViewsScript from "./PageViewsScript.astro";
 
 interface Props {
 	published: Date;
@@ -103,49 +104,5 @@ const {
     {showEncrypted && (
         <EncryptedBadge />
     )}
-    
-    {!isHome && id && (
-<script is:inline define:vars={{
-    pageViewsText: i18n(I18nKey.profileStatsPageViews),
-    visitsText: i18n(I18nKey.profileStatsVisits)
-}}>
-    function generateStatsText(pageViews, visits) {
-        return `${pageViewsText} ${pageViews} · ${visitsText} ${visits}`;
-    }
-
-    async function fetchPageViews() {
-        const container = document.querySelector('.umami-page-views');
-        
-        if (!window.oddmisc) {
-            container?.classList.add('hidden');
-            return;
-        }
-
-        const id = container?.dataset.id;
-        if (!id) {return;}
-
-        try {
-            const stats = await window.oddmisc.getStats(`/posts/${id}/`);
-            const pageViews = stats.pageviews || 0;
-            const visits = stats.visits || 0;
-
-            if (pageViews === 0 && visits === 0) {
-                container?.classList.add('hidden');
-                return;
-            }
-
-            container?.classList.remove('hidden');
-            container.querySelector('.page-views-display').textContent = generateStatsText(pageViews, visits);
-        } catch (error) {
-            console.error('Error fetching page views:', error);
-            container?.classList.add('hidden');
-        }
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', fetchPageViews);
-    } else {
-        fetchPageViews();
-    }
-</script>
-)}
+    {!isHome && id && <PageViewsScript />}
+</div>

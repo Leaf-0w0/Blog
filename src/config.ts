@@ -3,9 +3,7 @@
 	CommentConfig,
 	ExpressiveCodeConfig,
 	FooterConfig,
-	FullscreenWallpaperConfig,
 	LicenseConfig,
-	MusicPlayerConfig,
 	NavBarConfig,
 	PermalinkConfig,
 	ProfileConfig,
@@ -48,12 +46,6 @@ export const siteConfig: SiteConfig = {
 
 	// 顶栏标题配置
 	navbarTitle: {
-		// 显示模式："text-icon" 显示图标+文本，"logo" 仅显示Logo
-		mode: "logo",
-		// 顶栏标题文本
-		text: "SuzuhaYuki's Blog",
-		// 顶栏标题图标路径，默认使用 public/assets/home/home.webp
-		icon: "assets/home/home.png",
 		// 网站Logo图片路径
 		logo: "assets/home/HoshitsugigiKairou.webp",
 	},
@@ -95,19 +87,6 @@ export const siteConfig: SiteConfig = {
 		useNewStyle: false,
 	},
 
-	// 壁纸模式配置
-	wallpaperMode: {
-		// 默认壁纸模式：fullscreen=全屏壁纸，none=无壁纸
-		defaultMode: "none",
-		// 整体布局方案切换按钮显示设置（默认："desktop"）
-		// "off" = 不显示
-		// "mobile" = 仅在移动端显示
-		// "desktop" = 仅在桌面端显示
-		// "both" = 在所有设备上显示
-		showModeSwitchOnMobile: "off",
-		// 导航栏透明模式："semi" 半透明加圆角，"full" 完全透明，"semifull" 动态透明
-		navbarTransparentMode: "semifull",
-	},
 	toc: {
 		enable: true, // 总开关，启用目录功能
 		mobileTop: true, // 手机端顶部 TOC 按钮
@@ -159,28 +138,6 @@ export const siteConfig: SiteConfig = {
 		clarityId: "", // Clarity 项目 ID
 	},
 };
-export const fullscreenWallpaperConfig: FullscreenWallpaperConfig = {
-	src: {
-		desktop: ["https://www.loliapi.com/acg/"], // 桌面横幅图片
-		mobile: ["https://www.loliapi.com/acg/"], // 移动横幅图片
-	}, // 使用本地横幅图片
-	position: "center", // 壁纸位置，等同于 object-position
-	carousel: {
-		enable: false, // 启用轮播
-		interval: 5, // 轮播间隔时间（秒）
-	},
-	// PicFlow API支持(智能图片API)，启用后将作为壁纸图片来源
-	// 需要使用 PicFlow API 的 Text 返回类型，所以需要 format=text 参数
-	// 项目地址：https://github.com/matsuzaka-yuki/PicFlow-API
-	imageApi: {
-		enable: false, // 启用图片API
-		url: "http://domain.com/api_v2.php?format=text&count=4", // API地址，返回每行一个图片链接的文本
-	},
-	zIndex: -1, // 层级，确保壁纸在背景层
-	opacity: 0.8, // 壁纸透明度
-	blur: 1, // 背景模糊程度
-};
-
 export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
@@ -360,18 +317,6 @@ export const announcementConfig: AnnouncementConfig = {
 	},
 };
 
-export const musicPlayerConfig: MusicPlayerConfig = {
-	enable: true, // 启用音乐播放器功能
-	showFloatingPlayer: true, // 显示悬浮播放器 UI
-	floatingEntryMode: "fab", // 悬浮入口模式："default" 为独立悬浮播放器，"fab" 为集成到通用 FAB 组
-	mode: "meting", // 音乐播放器模式，可选 "local" 或 "meting"
-	meting_api:
-		"https://meting.mikus.ink/api?server=:server&type=:type&id=:id&auth=:auth&r=:r", // Meting API 地址
-	id: "17713936839", // 歌单ID
-	server: "netease", // 音乐源服务器。有的meting的api源支持更多平台,一般来说,netease=网易云音乐, tencent=QQ音乐, kugou=酷狗音乐, xiami=虾米音乐, baidu=百度音乐
-	type: "playlist", // 播单类型
-};
-
 export const footerConfig: FooterConfig = {
 	enable: true, // 是否启用Footer HTML注入功能
 	customHtml: "", // HTML格式的自定义页脚信息，例如备案号等，默认留空
@@ -407,13 +352,6 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			class: "onload-animation",
 			// 动画延迟时间
 			animationDelay: 50,
-		},
-		{
-			// 组件类型：侧栏音乐组件
-			type: "music-sidebar",
-			position: "sticky",
-			class: "onload-animation",
-			animationDelay: 100,
 		},
 		{
 			// 组件类型：分类组件
@@ -524,11 +462,8 @@ export const randomPostsConfig: RandomPostsConfig = {
 export const widgetConfigs = {
 	profile: profileConfig,
 	announcement: announcementConfig,
-	music: musicPlayerConfig,
 	layout: sidebarLayoutConfig,
-	fullscreenWallpaper: fullscreenWallpaperConfig,
 	share: shareConfig,
 	relatedPosts: relatedPostsConfig,
 	randomPosts: randomPostsConfig,
 } as const;
-

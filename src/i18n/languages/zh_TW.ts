@@ -98,30 +98,6 @@ export const zh_TW: Translation = {
 	[Key.notFoundDescription]: "抱歉，您訪問的頁面不存在或已被移動。",
 	[Key.backToHome]: "返回首頁",
 
-	// 音樂播放器
-	[Key.musicPlayer]: "音樂播放器",
-	[Key.musicPlayerShow]: "顯示音樂播放器",
-	[Key.musicPlayerHide]: "隱藏播放器",
-	[Key.musicPlayerExpand]: "展開音樂播放器",
-	[Key.musicPlayerCollapse]: "收起播放器",
-	[Key.musicPlayerPause]: "暫停",
-	[Key.musicPlayerPlay]: "播放",
-	[Key.musicPlayerPrevious]: "上一首",
-	[Key.musicPlayerNext]: "下一首",
-	[Key.musicPlayerShuffle]: "隨機播放",
-	[Key.musicPlayerRepeat]: "列表循環",
-	[Key.musicPlayerRepeatOne]: "單曲循環",
-	[Key.musicPlayerVolume]: "音量控制",
-	[Key.musicPlayerProgress]: "播放進度",
-	[Key.musicPlayerCover]: "封面",
-	[Key.musicPlayerPlaylist]: "播放列表",
-	[Key.musicPlayerLoading]: "載入中...",
-	[Key.musicPlayerErrorPlaylist]: "播放列表獲取失敗",
-	[Key.musicPlayerErrorSong]: "當前歌曲載入失敗，嘗試載入下一首",
-	[Key.musicPlayerErrorEmpty]: "播放列表中沒有可用的歌曲",
-	[Key.unknownSong]: "未知歌曲",
-	[Key.unknownArtist]: "未知藝術家",
-
 	// 相冊頁面
 	[Key.albums]: "相冊",
 	[Key.albumsSubtitle]: "記錄生活中的美好瞬間",
@@ -282,10 +258,6 @@ export const zh_TW: Translation = {
 	[Key.hour]: "小時",
 	[Key.minute]: "分",
 	[Key.second]: "秒",
-
-	// 壁紙模式
-	[Key.wallpaperFullscreen]: "全屏模式",
-	[Key.wallpaperNone]: "隱藏壁紙",
 
 	// 站點統計
 	[Key.siteStats]: "站點統計",

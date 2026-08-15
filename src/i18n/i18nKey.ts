@@ -90,30 +90,6 @@ enum I18nKey {
 	notFoundDescription = "notFoundDescription",
 	backToHome = "backToHome",
 
-	// 音乐播放器
-	musicPlayer = "musicPlayer",
-	musicPlayerShow = "musicPlayerShow",
-	musicPlayerHide = "musicPlayerHide",
-	musicPlayerExpand = "musicPlayerExpand",
-	musicPlayerCollapse = "musicPlayerCollapse",
-	musicPlayerPause = "musicPlayerPause",
-	musicPlayerPlay = "musicPlayerPlay",
-	musicPlayerPrevious = "musicPlayerPrevious",
-	musicPlayerNext = "musicPlayerNext",
-	musicPlayerShuffle = "musicPlayerShuffle",
-	musicPlayerRepeat = "musicPlayerRepeat",
-	musicPlayerRepeatOne = "musicPlayerRepeatOne",
-	musicPlayerVolume = "musicPlayerVolume",
-	musicPlayerProgress = "musicPlayerProgress",
-	musicPlayerCover = "musicPlayerCover",
-	musicPlayerPlaylist = "musicPlayerPlaylist",
-	musicPlayerLoading = "musicPlayerLoading",
-	musicPlayerErrorPlaylist = "musicPlayerErrorPlaylist",
-	musicPlayerErrorSong = "musicPlayerErrorSong",
-	musicPlayerErrorEmpty = "musicPlayerErrorEmpty",
-	unknownSong = "unknownSong",
-	unknownArtist = "unknownArtist",
-
 	// 相册页面
 	albums = "albums",
 	albumsSubtitle = "albumsSubtitle",
@@ -272,10 +248,6 @@ enum I18nKey {
 	atomHowToUse = "atomHowToUse",
 	atomCopied = "atomCopied",
 	atomCopyFailed = "atomCopyFailed",
-
-	// Wallpaper mode
-	wallpaperFullscreen = "wallpaperFullscreen",
-	wallpaperNone = "wallpaperNone",
 
 	// 站点统计
 	siteStats = "siteStats",

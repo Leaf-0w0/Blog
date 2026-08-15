@@ -50,24 +50,6 @@ html {
   scrollbar-gutter: stable;
 }
 
-/* 页面顶部渐变高光效果 */
-.top-gradient-highlight {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 180px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.3) 30%, rgba(255, 255, 255, 0.15) 60%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
-  pointer-events: none;
-  z-index: 20;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 暗色主题下的渐变高光效果 */
-:root.dark .top-gradient-highlight {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0.05) 80%, transparent 100%);
-}
-
 @utility expand-animation {
   @apply relative before:ease-out before:duration-75 before:transition-all active:bg-none hover:before:bg-(--btn-plain-bg-hover) active:before:bg-(--btn-plain-bg-active) z-0
       before:absolute before:rounded-[inherit] before:inset-0 before:scale-[0.85] hover:before:scale-100 before:-z-10;
@@ -168,8 +150,6 @@ html {
   /* 禁用复杂选择器元素的过渡 - 仅在非 View Transitions 模式下 */
   .is-theme-transitioning:not(.use-view-transition) .float-panel,
   .is-theme-transitioning:not(.use-view-transition) .float-panel *,
-  .is-theme-transitioning:not(.use-view-transition) .music-player,
-  .is-theme-transitioning:not(.use-view-transition) .music-player *,
   .is-theme-transitioning:not(.use-view-transition) .widget,
   .is-theme-transitioning:not(.use-view-transition) .widget *,
   .is-theme-transitioning:not(.use-view-transition) .dropdown-content,
@@ -194,12 +174,7 @@ html {
   }
 
   /* 导航栏主题切换保护 - 仅在非 View Transitions 模式下禁用过渡 */
-  .is-theme-transitioning:not(.use-view-transition) #navbar > div,
-  .is-theme-transitioning:not(.use-view-transition) #navbar[data-transparent-mode] > div,
-  .is-theme-transitioning:not(.use-view-transition) #navbar[data-transparent-mode].scrolled > div,
-  .is-theme-transitioning:not(.use-view-transition) body.wallpaper-transparent #navbar > div,
-  .is-theme-transitioning:not(.use-view-transition) body.wallpaper-transparent #navbar[data-transparent-mode] > div,
-  .is-theme-transitioning:not(.use-view-transition) body.wallpaper-transparent #navbar[data-transparent-mode].scrolled > div {
+  .is-theme-transitioning:not(.use-view-transition) #navbar > div {
     transition: none !important;
     backdrop-filter: none !important;
   }
@@ -221,39 +196,6 @@ html {
   }
   .card-base-transparent {
     @apply rounded-(--radius-large) overflow-hidden bg-(--card-bg-transparent) backdrop-blur-sm transition-colors duration-150;
-  }
-
-  /* 全屏壁纸模式下的半透明效果 - 使用!important确保优先级 */
-  .wallpaper-transparent .card-base {
-    background: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
-  }
-
-  body.wallpaper-transparent .card-base {
-    background: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
-  }
-
-  /* 确保嵌套的卡片元素在全屏壁纸模式下也应用半透明效果 */
-  .wallpaper-transparent .card-base .card-base,
-  body.wallpaper-transparent .card-base .card-base {
-    background: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
-  }
-
-  .wallpaper-transparent .float-panel {
-    @apply bg-(--card-bg-transparent) backdrop-blur-sm;
-  }
-
-  .wallpaper-transparent #navbar > div {
-    @apply bg-(--card-bg-transparent) backdrop-blur-sm;
-  }
-
-  .wallpaper-transparent .btn-card {
-    @apply bg-(--card-bg-transparent) backdrop-blur-sm;
   }
 
   h1,

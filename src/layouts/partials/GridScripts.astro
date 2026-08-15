@@ -1,19 +1,15 @@
 ---
 /**
  * Grid Scripts - MainGridLayout 的内联脚本提取
- * 包含壁纸模式管理、布局切换和 Swup 集成逻辑
+ * 包含布局切换和 Swup 集成逻辑
  */
 
 interface Props {
-	navbarTransparentMode?: string;
-	defaultWallpaperMode?: string;
 	defaultPostListLayout?: string;
 	pageScaling?: { enable: boolean; targetWidth?: number };
 }
 
 const {
-	navbarTransparentMode = "semi",
-	defaultWallpaperMode = "fullscreen",
 	defaultPostListLayout = "list",
 	pageScaling = { enable: false },
 } = Astro.props;
@@ -23,33 +19,12 @@ const {
 	type="module"
 	is:inline
 	define:vars={{
-		navbarTransparentMode,
-		defaultWallpaperMode,
 		defaultPostListLayout,
 		pageScaling,
 	}}
 >
-	// 立即执行，在页面渲染前应用壁纸模式和布局模式，避免闪烁
+	// 立即执行，在页面渲染前应用布局模式，避免闪烁
 	(function () {
-		const storedMode = localStorage.getItem("wallpaperMode");
-		// 仅接受 fullscreen / none，其余（含已废弃的 banner）回退为默认模式
-		const wallpaperMode =
-			storedMode === "fullscreen" || storedMode === "none"
-				? storedMode
-				: defaultWallpaperMode;
-		const body = document.body;
-
-		// 立即应用 body 类，确保首次渲染就是正确的状态
-		switch (wallpaperMode) {
-			case "fullscreen":
-				body.classList.add("wallpaper-transparent", "no-banner-mode");
-				break;
-			case "none":
-				body.classList.remove("wallpaper-transparent");
-				body.classList.add("no-banner-mode");
-				break;
-		}
-
 		// 立即调整主内容区域位置和布局模式（避免闪烁和位置错误）
 		// 使用 requestAnimationFrame 确保 DOM 准备好
 		requestAnimationFrame(function () {
@@ -57,7 +32,6 @@ const {
 				".absolute.w-full.z-30.pointer-events-none",
 			);
 			if (mainContent) {
-				// fullscreen 或 none 模式
 				mainContent.style.top = "5.5rem";
 			}
 
@@ -113,101 +87,6 @@ const {
 			}
 		});
 	})();
-
-	// 根据壁纸模式动态设置全屏壁纸的显示
-	function applyWallpaperMode() {
-		const storedMode = localStorage.getItem("wallpaperMode");
-		// 仅接受 fullscreen / none，其余（含已废弃的 banner）回退为默认模式
-		const wallpaperMode =
-			storedMode === "fullscreen" || storedMode === "none"
-				? storedMode
-				: defaultWallpaperMode;
-		const fullscreenWallpaper = document.querySelector(
-			"[data-fullscreen-wallpaper]",
-		);
-		const navbar = document.getElementById("navbar");
-		const body = document.body;
-		const mainContent = document.querySelector(
-			".absolute.w-full.z-30.pointer-events-none",
-		);
-		const tocWrapper = document.getElementById("toc-wrapper");
-
-		// 强制重排以确保样式正确应用
-		const forceReflow = function () {
-			void document.body.offsetHeight;
-		};
-
-		switch (wallpaperMode) {
-			case "fullscreen":
-				// 显示全屏壁纸
-				if (fullscreenWallpaper) {
-					fullscreenWallpaper.style.display = "block";
-				}
-				// 在全屏模式下始终显示 TOC
-				if (tocWrapper) {
-					tocWrapper.classList.remove("toc-hide");
-				}
-				// 强制重排
-				forceReflow();
-				// 移除内联样式，让CSS完全接管
-				if (mainContent) {
-					mainContent.style.removeProperty("top");
-				}
-				// 添加wallpaper-transparent和no-banner-mode类
-				body.classList.add("wallpaper-transparent");
-				body.classList.add("no-banner-mode");
-				// navbar 强制设置为 semi 透明模式（忽略 config 配置）
-				if (navbar) {
-					navbar.setAttribute("data-dynamic-transparent", "semi");
-					// 强制移除 config 中的 data-transparent-mode 影响
-					navbar.removeAttribute("data-transparent-mode");
-				}
-				// 强制重排以确保CSS变量正确更新
-				forceReflow();
-				break;
-
-			case "none":
-				// 隐藏全屏壁纸
-				if (fullscreenWallpaper) {
-					fullscreenWallpaper.style.display = "none";
-				}
-				// 在无壁纸模式下也始终显示 TOC
-				if (tocWrapper) {
-					tocWrapper.classList.remove("toc-hide");
-				}
-				// 先移除body类，避免CSS冲突
-				body.classList.remove("wallpaper-transparent");
-				// 强制重排
-				forceReflow();
-				// 移除内联样式，让CSS完全接管
-				if (mainContent) {
-					mainContent.style.removeProperty("top");
-				}
-				// 添加no-banner-mode类
-				body.classList.add("no-banner-mode");
-				// navbar 强制设置为不透明（忽略 config 配置）
-				if (navbar) {
-					navbar.setAttribute("data-dynamic-transparent", "none");
-					// 强制移除 config 中的 data-transparent-mode 影响
-					navbar.removeAttribute("data-transparent-mode");
-				}
-				// 强制重排以确保CSS变量正确更新
-				forceReflow();
-				break;
-		}
-	}
-
-	// 监听壁纸模式变化，立即应用（不重载页面）
-	window.addEventListener("wallpaper-mode-change", function (_event) {
-		applyWallpaperMode();
-	});
-
-	// 在 DOM 加载后执行
-	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", applyWallpaperMode);
-	} else {
-		applyWallpaperMode();
-	}
 
 	// 支持 Swup 页面过渡 - 在内容替换之前就应用布局，避免闪烁
 	function setupSwupLayoutSync() {
@@ -310,8 +189,6 @@ const {
 
 	// 支持 Swup 页面过渡
 	document.addEventListener("swup:page:view", function () {
-		applyWallpaperMode();
-
 		// 在Swup页面切换时也要重新应用布局模式
 		requestAnimationFrame(function () {
 			const mainGrid = document.getElementById("main-grid");

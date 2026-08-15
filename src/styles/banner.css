@@ -1,17 +1,10 @@
 /**
  * 网格布局样式文件
- * 包含无壁纸 / 全屏壁纸模式下的主内容定位、TOC、侧边栏与文章列表网格布局样式
+ * 包含主内容定位、TOC、侧边栏与文章列表网格布局样式
  */
 
-/* ==========================================================================
-   无壁纸模式布局
-   ========================================================================== */
-body.no-banner-mode .absolute.w-full.z-30 {
-  top: 5.5rem !important;
-}
-
 /* TOC 垂直对齐优化 */
-body.no-banner-mode #toc-inner-wrapper {
+#toc-inner-wrapper {
   top: 5.5rem !important;
   height: calc(100vh - 8rem) !important;
   max-height: calc(100vh - 8rem) !important;
@@ -24,20 +17,10 @@ body.no-banner-mode #toc-inner-wrapper {
     max-height: calc(100vh - 5.5rem) !important;
   }
 
-  body.no-banner-mode #toc-inner-wrapper {
+  #toc-inner-wrapper {
     height: calc(100vh - 6.5rem) !important;
     max-height: calc(100vh - 6.5rem) !important;
   }
-}
-
-/* 全屏壁纸模式下的 TOC 毛玻璃背景 */
-body.wallpaper-transparent #toc-inner-wrapper:has(table-of-contents[data-loaded="true"]) {
-  background: var(--card-bg-transparent) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-radius: var(--radius-large);
-  padding: 0.5rem;
-  box-shadow: var(--shadow-lg);
 }
 
 /* ==========================================================================

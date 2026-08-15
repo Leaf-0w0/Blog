@@ -12,7 +12,7 @@ export const SWUP_SELECTORS = {
 	animationScope: "#main-grid",
 
 	// 需要持久化的元素
-	persistElements: ["#navbar-wrapper", "#sidebar", ".music-player"],
+	persistElements: ["#navbar-wrapper", "#sidebar"],
 
 	// 导航相关
 	navbar: "#navbar",

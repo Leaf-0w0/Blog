@@ -185,19 +185,3 @@ export function calculateGridLayout(
 		desktopMainPos,
 	};
 }
-
-/**
- * 检查是否应该启用半透明效果
- */
-export function shouldEnableTransparency(
-	defaultWallpaperMode: string,
-): boolean {
-	return defaultWallpaperMode === "fullscreen";
-}
-
-/**
- * 获取半透明效果 CSS 类名
- */
-export function getTransparencyClass(shouldEnable: boolean): string {
-	return shouldEnable ? "wallpaper-transparent" : "";
-}

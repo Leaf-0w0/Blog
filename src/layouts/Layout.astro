@@ -1,14 +1,12 @@
 ---
 import ConfigCarrier from "@components/misc/ConfigCarrier.astro";
-import MusicPlayer from "@components/widgets/music-player/MusicPlayer.svelte";
 import { PageProgressBar } from "@components/control/PageProgressBar";
-import { fullscreenWallpaperConfig, profileConfig, siteConfig } from "@/config";
+import { profileConfig, siteConfig } from "@/config";
 
 import { PAGE_WIDTH } from "../constants/constants";
 import { pathsEqual, url } from "../utils/url-utils";
 import "../styles/main.css";
 import "../styles/mobile-navbar.css";
-import "../styles/wallpaper-navbar-transparent.css";
 import "../styles/fancybox-custom.css";
 import "../styles/expressive-code.css";
 import "../styles/panel-animations.css";
@@ -45,50 +43,6 @@ const isHomePage = pathsEqual(Astro.url.pathname, url("/"));
 // defines global css variables
 // why doing this in Layout instead of GlobalStyles: https://github.com/withastro/astro/issues/6728#issuecomment-1502203757
 const configHue = siteConfig.themeColor.hue;
-
-// 获取导航栏透明模式配置
-const navbarTransparentMode =
-	siteConfig.wallpaperMode.navbarTransparentMode || "semi";
-
-// 判断是否应该显示顶部高光效果（只在full和semifull模式下显示）
-const shouldShowTopHighlight =
-	navbarTransparentMode === "full" || navbarTransparentMode === "semifull";
-
-// 获取默认壁纸图片的辅助函数（用作 OG 图片回退）
-const getDefaultBanner = (): string => {
-	const src = fullscreenWallpaperConfig.src;
-	if (typeof src === "string") {
-		return src;
-	}
-	if (Array.isArray(src)) {
-		return src[0] || "";
-	}
-	if (src && typeof src === "object") {
-		// 优先使用desktop，如果没有则使用mobile
-		const desktopSrc = src.desktop;
-		const mobileSrc = src.mobile;
-		if (typeof desktopSrc === "string") {
-			return desktopSrc;
-		}
-		if (Array.isArray(desktopSrc) && desktopSrc.length > 0) {
-			return desktopSrc[0];
-		}
-		if (typeof mobileSrc === "string") {
-			return mobileSrc;
-		}
-		if (Array.isArray(mobileSrc) && mobileSrc.length > 0) {
-			return mobileSrc[0];
-		}
-	}
-	return "";
-};
-
-if (!banner || typeof banner !== "string" || banner.trim() === "") {
-	banner = getDefaultBanner();
-}
-
-// TODO don't use post cover as banner for now
-banner = getDefaultBanner();
 
 let pageTitle: string;
 if (title) {
@@ -217,9 +171,6 @@ if (siteConfig.font) {
 				width="0"
 				style="display:none;visibility:hidden"></iframe></noscript
 		>
-		<!-- 页面顶部渐变高光效果 - 只在full和semifull模式下显示 -->
-		{shouldShowTopHighlight && <div class="top-gradient-highlight" />}
-
 		<ConfigCarrier />
 		<PageProgressBar
 			enable={siteConfig.pageProgressBar?.enable ?? false}
@@ -228,8 +179,6 @@ if (siteConfig.font) {
 		/>
 		<slot />
 
-		<!-- Music Player - 核心始终加载（当enable=true），UI通过showFloatingPlayer控制 -->
-		<MusicPlayer client:idle />
 	</body>
 </html>
 

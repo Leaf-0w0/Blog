@@ -2,12 +2,9 @@ import {
 	DARK_MODE,
 	DEFAULT_THEME,
 	LIGHT_MODE,
-	WALLPAPER_FULLSCREEN,
-	WALLPAPER_NONE,
 } from "@constants/constants";
 
-import { siteConfig } from "@/config";
-import type { LIGHT_DARK_MODE, WALLPAPER_MODE } from "@/types/config";
+import type { LIGHT_DARK_MODE } from "@/types/config";
 
 export function getDefaultHue(): number {
 	const fallback = "250";
@@ -151,21 +148,4 @@ export function setTheme(theme: LIGHT_DARK_MODE): void {
 
 export function getStoredTheme(): LIGHT_DARK_MODE {
 	return (localStorage.getItem("theme") as LIGHT_DARK_MODE) || DEFAULT_THEME;
-}
-
-export function getStoredWallpaperMode(): WALLPAPER_MODE {
-	const stored = localStorage.getItem("wallpaperMode");
-	// 仅接受 fullscreen / none，其余（含已废弃的 banner）回退为默认模式
-	if (stored === WALLPAPER_FULLSCREEN || stored === WALLPAPER_NONE) {
-		return stored;
-	}
-	return siteConfig.wallpaperMode.defaultMode;
-}
-
-export function setWallpaperMode(mode: WALLPAPER_MODE): void {
-	localStorage.setItem("wallpaperMode", mode);
-	// 触发自定义事件通知其他组件壁纸模式已改变
-	window.dispatchEvent(
-		new CustomEvent("wallpaper-mode-change", { detail: { mode } }),
-	);
 }

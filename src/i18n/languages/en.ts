@@ -96,30 +96,6 @@ export const en: Translation = {
 		"Sorry, the page you visited does not exist or has been moved.",
 	[Key.backToHome]: "Back to Home",
 
-	// Music Player
-	[Key.musicPlayer]: "Music Player",
-	[Key.musicPlayerShow]: "Show Music Player",
-	[Key.musicPlayerHide]: "Hide Music Player",
-	[Key.musicPlayerExpand]: "Expand Music Player",
-	[Key.musicPlayerCollapse]: "Collapse Music Player",
-	[Key.musicPlayerPause]: "Pause",
-	[Key.musicPlayerPlay]: "Play",
-	[Key.musicPlayerPrevious]: "Previous",
-	[Key.musicPlayerNext]: "Next",
-	[Key.musicPlayerShuffle]: "Shuffle",
-	[Key.musicPlayerRepeat]: "Repeat All",
-	[Key.musicPlayerRepeatOne]: "Repeat One",
-	[Key.musicPlayerVolume]: "Volume Control",
-	[Key.musicPlayerProgress]: "Playback Progress",
-	[Key.musicPlayerCover]: "Cover",
-	[Key.musicPlayerPlaylist]: "Playlist",
-	[Key.musicPlayerLoading]: "Loading...",
-	[Key.musicPlayerErrorPlaylist]: "Failed to fetch playlist",
-	[Key.musicPlayerErrorSong]: "Failed to load current song, trying next",
-	[Key.musicPlayerErrorEmpty]: "No available songs in playlist",
-	[Key.unknownSong]: "Unknown Song",
-	[Key.unknownArtist]: "Unknown Artist",
-
 	// Albums Page
 	[Key.albums]: "Albums",
 	[Key.albumsSubtitle]: "Record beautiful moments in life",
@@ -208,10 +184,6 @@ export const en: Translation = {
 		"It is recommended to use Feedly, Inoreader or other Atom readers to subscribe to this site.",
 	[Key.atomCopied]: "Atom link copied to clipboard!",
 	[Key.atomCopyFailed]: "Copy failed, please copy the link manually",
-
-	// Wallpaper mode
-	[Key.wallpaperFullscreen]: "Fullscreen Mode",
-	[Key.wallpaperNone]: "Hide Wallpaper",
 
 	// Skills Page
 	[Key.skills]: "Skills",

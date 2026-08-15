@@ -2,19 +2,14 @@
 import FloatingControls from "@components/control/FloatingControls.astro";
 import { SidebarTOC } from "@components/features/toc";
 import RightSideBar from "@components/layout/RightSideBar.astro";
-import FullscreenWallpaper from "@components/misc/FullscreenWallpaper.astro";
 import IconifyLoader from "@components/misc/IconifyLoader.astro";
 import Footer from "@components/organisms/footer/Footer.astro";
 import Navbar from "@components/organisms/navigation/Navbar.astro";
 import SideBar from "@components/widgets/sidebar/SideBar.astro";
 import type { MarkdownHeading } from "astro";
 
-import { fullscreenWallpaperConfig, siteConfig } from "../config";
-import {
-	calculateGridLayout,
-	getTransparencyClass,
-	shouldEnableTransparency,
-} from "../utils/grid-layout-utils";
+import { siteConfig } from "../config";
+import { calculateGridLayout } from "../utils/grid-layout-utils";
 import { widgetManager } from "../utils/widget-manager";
 import Layout from "./Layout.astro";
 import GridScripts from "./partials/GridScripts.astro";
@@ -59,12 +54,6 @@ const {
 const { hasRightSidebarComponents, hasMobileDrawerComponents } =
 	sidebarPresence;
 
-// 半透明效果
-const shouldEnable = shouldEnableTransparency(
-	siteConfig.wallpaperMode.defaultMode,
-);
-const transparentClass = getTransparencyClass(shouldEnable);
-
 // 布局模式
 const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 ---
@@ -79,15 +68,9 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 	coverImage={coverImage}
 >
 	<GridScripts
-		navbarTransparentMode={siteConfig.wallpaperMode.navbarTransparentMode ||
-			"semi"}
-		defaultWallpaperMode={siteConfig.wallpaperMode.defaultMode}
 		defaultPostListLayout={siteConfig.postListLayout?.defaultMode || "list"}
 		pageScaling={siteConfig.pageScaling}
 	/>
-
-	<!-- 全屏壁纸 - 始终渲染，通过 JS 控制显示隐藏 -->
-	<FullscreenWallpaper config={fullscreenWallpaperConfig} />
 
 	<!-- 全局图标加载器 -->
 	<IconifyLoader />
@@ -109,7 +92,7 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 
 	<!-- Main content -->
 	<div
-		class={`absolute w-full z-30 pointer-events-none no-banner-layout ${transparentClass}`}
+		class="absolute w-full z-30 pointer-events-none no-banner-layout"
 		style="top: 5.5rem"
 	>
 		<!-- The pointer-events-none here prevent blocking the click event of the TOC -->
@@ -126,7 +109,7 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 							tabletShowSidebar ||
 							desktopShowSidebar) && (
 							<SideBar
-								class={`${sidebarClass} ${transparentClass}`}
+								class={sidebarClass}
 								headings={headings}
 							/>
 						)
@@ -135,7 +118,7 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 					{
 						hasRightSidebarComponents && (
 							<div
-								class={`right-sidebar-container ${rightSidebarClass} ${transparentClass}`}
+								class={`right-sidebar-container ${rightSidebarClass}`}
 							>
 								<RightSideBar headings={headings} />
 							</div>

@@ -1,8 +1,6 @@
 import type {
 	DARK_MODE,
 	LIGHT_MODE,
-	WALLPAPER_FULLSCREEN,
-	WALLPAPER_NONE,
 } from "../constants/constants";
 
 export interface SiteConfig {
@@ -41,11 +39,8 @@ export interface SiteConfig {
 	};
 
 	// 顶栏标题配置
-	navbarTitle?: {
-		mode?: "text-icon" | "logo"; // 显示模式："text-icon" 显示图标+文本，"logo" 仅显示Logo
-		text: string; // 顶栏标题文本
-		icon?: string; // 顶栏标题图标路径
-		logo?: string; // 网站Logo图片路径
+	navbarTitle: {
+		logo: string; // 网站 Logo 图片路径
 	};
 
 	// 页面自动缩放配置
@@ -89,12 +84,6 @@ export interface SiteConfig {
 		useNewStyle?: boolean; // 是否使用新样式（悬停高亮样式）还是旧样式（外框常亮样式）
 	};
 
-	// 壁纸模式配置
-	wallpaperMode: {
-		defaultMode: "fullscreen" | "none"; // 默认壁纸模式：fullscreen=全屏壁纸，none=无壁纸
-		showModeSwitchOnMobile?: "off" | "mobile" | "desktop" | "both"; // 整体布局方案切换按钮显示设置：off=隐藏，mobile=仅移动端，desktop=仅桌面端，both=全部显示
-		navbarTransparentMode?: "semi" | "full" | "semifull"; // 导航栏透明模式
-	};
 	toc: {
 		enable: boolean; // 总开关，false 时所有 TOC 都不显示
 		mobileTop: boolean; // 手机端顶部 TOC 按钮
@@ -213,10 +202,6 @@ export interface GiscusConfig {
 
 export type LIGHT_DARK_MODE = typeof LIGHT_MODE | typeof DARK_MODE;
 
-export type WALLPAPER_MODE =
-	| typeof WALLPAPER_FULLSCREEN
-	| typeof WALLPAPER_NONE;
-
 export interface BlogPostData {
 	body: string;
 	title: string;
@@ -253,17 +238,6 @@ export interface AnnouncementConfig {
 	};
 }
 
-export interface MusicPlayerConfig {
-	enable: boolean; // 是否启用音乐播放器功能
-	showFloatingPlayer: boolean; // 是否显示悬浮播放器 UI
-	floatingEntryMode?: "default" | "fab"; // 悬浮入口模式：默认独立播放器或集成到 FAB 组
-	mode: "meting" | "local"; // 音乐播放器模式
-	meting_api: string; // Meting API 地址
-	id: string; // 歌单ID
-	server: string; // 音乐源服务器
-	type: string; // 音乐类型
-}
-
 export interface FooterConfig {
 	enable: boolean; // 是否启用Footer HTML注入功能
 	customHtml?: string; // 自定义HTML内容，用于添加备案号等信息
@@ -277,8 +251,6 @@ export type WidgetComponentType =
 	| "tags"
 	| "toc"
 	| "card-toc" // 卡片式目录组件
-	| "music-player"
-	| "music-sidebar"
 	| "site-stats" // 站点统计组件
 	| "calendar" // 日历组件
 	| "custom";
@@ -315,28 +287,6 @@ export interface SidebarLayoutConfig {
 			desktop: number; // 桌面端断点（px）
 		};
 	};
-}
-
-export interface FullscreenWallpaperConfig {
-	src:
-		| string
-		| string[]
-		| {
-				desktop?: string | string[];
-				mobile?: string | string[];
-		  }; // 支持单个图片、图片数组或分别设置桌面端和移动端图片
-	position?: "top" | "center" | "bottom"; // 壁纸位置，等同于 object-position
-	carousel?: {
-		enable: boolean; // 是否启用轮播
-		interval: number; // 轮播间隔时间（秒）
-	};
-	imageApi?: {
-		enable: boolean; // 是否启用图片API
-		url: string; // API地址，返回每行一个图片链接的文本
-	};
-	zIndex?: number; // 层级，确保壁纸在合适的层级显示
-	opacity?: number; // 壁纸透明度，0-1之间
-	blur?: number; // 背景模糊程度，单位px
 }
 
 /**

@@ -100,9 +100,6 @@ export class SwupHooksManager {
 
 			// 处理 TOC 重新初始化
 			this.handleTOCReinit();
-
-			// 重新初始化 semifull 模式滚动检测
-			this.reinitSemifullScrollDetection();
 		});
 	}
 
@@ -191,26 +188,6 @@ export class SwupHooksManager {
 	}
 
 	/**
-	 * 重新初始化 semifull 模式滚动检测
-	 */
-	private reinitSemifullScrollDetection(): void {
-		const navbar = this.getCachedElement(SWUP_SELECTORS.navbar);
-		if (navbar) {
-			const transparentMode = navbar.getAttribute(
-				"data-transparent-mode",
-			);
-			if (transparentMode === "semifull") {
-				if (
-					typeof (window as any).initSemifullScrollDetection ===
-					"function"
-				) {
-					(window as any).initSemifullScrollDetection();
-				}
-			}
-		}
-	}
-
-	/**
 	 * 处理 body class
 	 */
 	private handleBodyClass(isHomePage: boolean): void {
@@ -231,19 +208,6 @@ export class SwupHooksManager {
 		const navbar = this.getCachedElement(SWUP_SELECTORS.navbar);
 		if (navbar) {
 			navbar.setAttribute("data-is-home", isHomePage.toString());
-
-			// 重新初始化 semifull 模式滚动检测
-			const transparentMode = navbar.getAttribute(
-				"data-transparent-mode",
-			);
-			if (transparentMode === "semifull") {
-				if (
-					typeof (window as any).initSemifullScrollDetection ===
-					"function"
-				) {
-					(window as any).initSemifullScrollDetection();
-				}
-			}
 		}
 	}
 

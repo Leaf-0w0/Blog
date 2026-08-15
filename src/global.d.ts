@@ -36,9 +36,6 @@ declare global {
 	interface SiteConfigWindow {
 		lang?: string;
 		toc?: SiteConfigTOC;
-		wallpaperMode?: {
-			defaultMode?: "fullscreen" | "none";
-		};
 	}
 
 	interface Window {
@@ -55,7 +52,6 @@ declare global {
 		loadPagefind?: () => Promise<void>;
 		toggleFloatingTOC?: () => void;
 		mobileTOCInit?: () => void;
-		initSemifullScrollDetection?: () => void;
 		iconifyLoaded?: boolean;
 
 		// CardTOC manager
