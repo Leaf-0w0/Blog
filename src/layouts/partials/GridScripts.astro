@@ -9,10 +9,8 @@ interface Props {
 	pageScaling?: { enable: boolean; targetWidth?: number };
 }
 
-const {
-	defaultPostListLayout = "list",
-	pageScaling = { enable: false },
-} = Astro.props;
+const { defaultPostListLayout = "list", pageScaling = { enable: false } } =
+	Astro.props;
 ---
 
 <script

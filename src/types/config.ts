@@ -1,7 +1,4 @@
-import type {
-	DARK_MODE,
-	LIGHT_MODE,
-} from "../constants/constants";
+import type { DARK_MODE, LIGHT_MODE } from "../constants/constants";
 
 export interface SiteConfig {
 	title: string;

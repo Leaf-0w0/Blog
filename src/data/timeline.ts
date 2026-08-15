@@ -9,14 +9,7 @@ export const timelineData: TimelineItem[] = [
 		startDate: "2024-09-01",
 		location: "Fujian",
 		organization: "福建林业职业技术学院",
-		skills: [
-			"Hadoop",
-			"Spark",
-			"Python",
-			"JavaScript",
-			"HTML/CSS",
-			"MySQL",
-		],
+		skills: ["Hadoop", "Spark", "Python", "JavaScript", "HTML/CSS", "MySQL"],
 		icon: "material-symbols:school",
 		color: "#059669",
 		featured: true,
@@ -27,14 +20,7 @@ export const timelineData: TimelineItem[] = [
 		description: "参与 Mizuki 项目的维护和更新，修复bug并添加新功能。",
 		type: "project",
 		startDate: "2025-12-24",
-		skills: [
-			"Astro",
-			"TypeScript",
-			"Tailwind CSS",
-			"Svelte",
-			"Swup",
-			"Git",
-		],
+		skills: ["Astro", "TypeScript", "Tailwind CSS", "Svelte", "Swup", "Git"],
 		links: [
 			{
 				name: "代码仓库",
@@ -57,14 +43,7 @@ export const timelineData: TimelineItem[] = [
 		description: "参与 Aruma 项目的维护和更新，修复bug并添加新功能。",
 		type: "project",
 		startDate: "2026-03-08",
-		skills: [
-			"Astro",
-			"TypeScript",
-			"Tailwind CSS",
-			"Svelte",
-			"MDUI",
-			"Git",
-		],
+		skills: ["Astro", "TypeScript", "Tailwind CSS", "Svelte", "MDUI", "Git"],
 		links: [
 			{
 				name: "代码仓库",

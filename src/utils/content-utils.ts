@@ -1,8 +1,8 @@
+import { type CollectionEntry, getCollection } from "astro:content";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { initPostIdMap } from "@utils/permalink-utils";
 import { getCategoryUrl, getPostUrl } from "@utils/url-utils";
-import { type CollectionEntry, getCollection } from "astro:content";
 
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts() {
@@ -244,8 +244,7 @@ export async function getRelatedPosts(
 
 		// timeFreshnessScore (0-30): 6 个月半衰期
 		const daysSincePublished =
-			(now - new Date(post.data.published).getTime()) /
-			(1000 * 60 * 60 * 24);
+			(now - new Date(post.data.published).getTime()) / (1000 * 60 * 60 * 24);
 		const timeFreshnessScore =
 			30 * Math.exp((-Math.LN2 * daysSincePublished) / 180);
 
@@ -257,10 +256,7 @@ export async function getRelatedPosts(
 				: 0;
 
 		const totalScore =
-			tagMatchScore +
-			titleSimilarityScore +
-			timeFreshnessScore +
-			categoryBonus;
+			tagMatchScore + titleSimilarityScore + timeFreshnessScore + categoryBonus;
 
 		return {
 			post,

@@ -71,7 +71,8 @@ export const friendsData: FriendItem[] = [
 	{
 		id: 8,
 		title: "松坂日记",
-		imgurl: "https://q.qlogo.cn/headimg_dl?dst_uin=3231515355&spec=640&img_type=jpg",
+		imgurl:
+			"https://q.qlogo.cn/headimg_dl?dst_uin=3231515355&spec=640&img_type=jpg",
 		desc: "世界は大きい、君は行かなければならない",
 		siteurl: "https://blog.mysqil.com/",
 		tags: ["Blog", "Friends"],

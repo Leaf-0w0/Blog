@@ -1,19 +1,19 @@
 ---
-import { Icon } from "astro-icon/components"
+import { Icon } from "astro-icon/components";
 
-import { navBarConfig, siteConfig } from "../../../config"
-import { LinkPresets } from "../../../constants/link-presets"
-import { LinkPreset, type NavBarLink } from "../../../types/config"
-import { url } from "../../../utils/url-utils"
-import LayoutSwitch from "../../control/LayoutSwitch.svelte"
-import ThemeSwitch from "../../control/ThemeSwitch.svelte"
-import DisplaySettings from "../../features/settings/DisplaySettings.svelte"
-import MobileTOC from "../../features/toc/MobileTOC.svelte"
-import DropdownMenu from "./DropdownMenu.astro"
-import NavMenuPanel from "./NavMenuPanel.astro"
-import Search from "./Search.svelte"
+import { navBarConfig, siteConfig } from "../../../config";
+import { LinkPresets } from "../../../constants/link-presets";
+import { LinkPreset, type NavBarLink } from "../../../types/config";
+import { url } from "../../../utils/url-utils";
+import LayoutSwitch from "../../control/LayoutSwitch.svelte";
+import ThemeSwitch from "../../control/ThemeSwitch.svelte";
+import DisplaySettings from "../../features/settings/DisplaySettings.svelte";
+import MobileTOC from "../../features/toc/MobileTOC.svelte";
+import DropdownMenu from "./DropdownMenu.astro";
+import NavMenuPanel from "./NavMenuPanel.astro";
+import Search from "./Search.svelte";
 
-const className = Astro.props.class
+const className = Astro.props.class;
 
 // 检查是否为首页
 const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "";
@@ -32,7 +32,9 @@ const logoSrc = rawLogo.match(/^(http|https|\/\/)/) ? rawLogo : url(rawLogo);
 
 const isLogoExternal = rawLogo.match(/^(http|https|\/\/)/);
 const hasLogoPngFallback = rawLogo?.endsWith(".png") && !isLogoExternal;
-const logoWebpSrc = hasLogoPngFallback ? logoSrc.replace(/\.png$/i, ".webp") : logoSrc;
+const logoWebpSrc = hasLogoPngFallback
+	? logoSrc.replace(/\.png$/i, ".webp")
+	: logoSrc;
 ---
 <div id="navbar" class="z-50 onload-animation group" data-is-home={isHomePage}>
     <div class="absolute h-8 left-0 right-0 -top-8 bg-[var(--card-bg)] transition"></div> <!-- used for onload animation -->
