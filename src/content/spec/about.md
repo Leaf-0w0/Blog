@@ -1,25 +1,26 @@
-基于 [Astro](https://astro.build/) 框架构建的个人博客，使用了 [Mizuki](https://github.com/LyraVoid/Mizuki) 主题。
-::github{repo="LyraVoid/Mizuki"}
+# About Shirone
 
-# 关于我
-## 个人介绍
-**称呼**：你可以叫我「叶子」或「铃叶」。「叶子」来自我的历史昵称「叶子丿Leaf」，而「铃叶」则取自我现在的昵称。  
-**所在地**：Nanping, Fujian, China  
-**教育背景**：目前就读于福建林业职业技术学院，是一名普通的大专生。
+Welcome to the demo site of **Shirone** (白音) — an expressive, anime-inspired blog theme built on the **Material 3 Expressive (M3E)** design system.
 
-## 联系方式
-如果你想与我交流，可以通过以下方式联系到我：
-- **Email**：[leafmessagecn@foxmail.com](mailto:leafmessagecn@foxmail.com)
-- **GitHub**：[葉桜](https://github.com/Leaf-0w0)
-- **Bilibili**：[鈴葉Yuki](https://space.bilibili.com/389623999)
-- **X（原Twitter）**：[@SuzuhaYuki_](https://x.com/SuzuhaYuki_)
+::github{repo="LyraVoid/Shirone"}
 
-## 兴趣爱好
-我平时喜欢玩的游戏包括：
-- **Calabiyau / Strinova**（卡拉彼丘）
-- **Neverness to Everness**（异环）
-- **Forza Horizon 6**（极限竞速：地平线6）
+## ✦ Design & Philosophy
 
-除了游戏之外，我也对技术和互联网文化充满兴趣，喜欢探索各种开源项目和新兴技术。在这个博客里，我会分享一些技术心得、生活感悟，以及其他感兴趣的内容。
+Shirone aims to combine the warmth of expressive anime aesthetics with the rigor of modern web engineering:
 
-> *Time goes by, and the years go by.*
+- **Dynamic Chromatic Spell**: Full dynamic HCT palette generation responding seamlessly to light/dark modes and user preferences with zero layout shifts.
+- **Seamless Shell Navigation**: Persistent application shell driven by Swup for continuous music playback, smooth page transitions, and preserved state.
+- **Rich Story Grimoire**: Markdown and MDX authoring with KaTeX math, Mermaid diagrams, interactive admonitions, expressive code blocks, and adaptive image galleries.
+- **Zero Extra Burden**: Optional integrations (comments, analytics, music widgets) load dynamically on demand — zero DOM footprint and zero bundle overhead when disabled.
+
+## ✦ Tech Stack
+
+- **Framework**: [Astro 7](https://astro.build/) & [Svelte 5](https://svelte.dev/) (Runes-driven islands)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) & [Stylus](https://stylus-lang.com/)
+- **Design Standard**: [Material 3 Expressive](https://m3.material.io/)
+- **Typography**: Outfit & Yozai (悠哉圆体) with automated build-time subsetting
+- **Search Engine**: [Pagefind](https://pagefind.app/) offline full-text search
+
+## ✦ Credits
+
+- **Font**: [Yozai Font (悠哉字体)](https://github.com/lxgw/yozai-font) by [lxgw](https://github.com/lxgw)

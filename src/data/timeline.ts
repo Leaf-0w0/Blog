@@ -1,63 +1,91 @@
-import type { TimelineItem } from "../components/features/timeline/types";
+/**
+ * 时间线页数据源（纯内容）。
+ * 页面展示与筛选规则由 src/config/timelineConfig.ts 控制。
+ */
+import type { TimelineItem } from "@/types/timelineConfig";
 
 export const timelineData: TimelineItem[] = [
 	{
-		id: "current-study",
-		title: "福建林职院 · 大数据技术",
-		description: "目前正在大学专科学习大数据技术，包括Hadoop、Spark等。",
-		type: "education",
-		startDate: "2024-09-01",
-		location: "Fujian",
-		organization: "福建林业职业技术学院",
-		skills: ["Hadoop", "Spark", "Python", "JavaScript", "HTML/CSS", "MySQL"],
-		icon: "material-symbols:school",
-		color: "#059669",
+		title: "Shirone Theme M3E Major Architecture Upgrade",
+		date: "2026.08",
+		category: "milestone",
+		subtitle: "Open Source Project",
+		description:
+			"Refactored the entire blog theme into a Material 3 Expressive atomic component system with token-driven styling, complete keyboard navigation, and full accessibility compliance.",
+		highlights: [
+			"Implemented dynamic HCT palette calculation and state layer tokens",
+			"Added multi-page capabilities: Timeline, Skills, Projects, and Protected Albums",
+			"Zero-error strict type-checking and automated visual regression locks",
+		],
+		tags: ["Astro", "Svelte 5", "M3E", "Tailwind 4"],
+		links: [
+			{
+				label: "GitHub Repository",
+				url: "https://github.com/LyraVoid/Shirone",
+				icon: "fa7-brands:github",
+			},
+		],
+		icon: "material-symbols:rocket-launch-rounded",
 		featured: true,
 	},
 	{
-		id: "maintain-the-mizuki-project",
-		title: "维护 Mizuki 项目",
-		description: "参与 Mizuki 项目的维护和更新，修复bug并添加新功能。",
-		type: "project",
-		startDate: "2025-12-24",
-		skills: ["Astro", "TypeScript", "Tailwind CSS", "Svelte", "Swup", "Git"],
-		links: [
-			{
-				name: "代码仓库",
-				url: "https://github.com/LyraVoid/Mizuki",
-				type: "project",
-			},
-			{
-				name: "在线演示",
-				url: "https://mizuki.mysqil.com/",
-				type: "website",
-			},
+		title: "Senior Frontend Engineer",
+		date: "2025.03 – Present",
+		category: "career",
+		subtitle: "Technology Lab",
+		location: "Tokyo, Japan",
+		description:
+			"Leading frontend architecture, web performance optimization, and interactive design system development for modern web platforms.",
+		highlights: [
+			"Spearheaded design system unification across web products",
+			"Reduced core bundle load times by 40% using modern SSR and asset pipelines",
 		],
-		icon: "material-symbols:code",
-		color: "#EC4899",
+		tags: ["TypeScript", "Architecture", "Performance", "Design System"],
+		icon: "material-symbols:work-rounded",
 		featured: true,
 	},
 	{
-		id: "maintain-the-aruma-project",
-		title: "维护 Aruma 项目",
-		description: "参与 Aruma 项目的维护和更新，修复bug并添加新功能。",
-		type: "project",
-		startDate: "2026-03-08",
-		skills: ["Astro", "TypeScript", "Tailwind CSS", "Svelte", "MDUI", "Git"],
-		links: [
-			{
-				name: "代码仓库",
-				url: "https://github.com/LyraVoid/Aruma",
-				type: "project",
-			},
-			{
-				name: "在线演示",
-				url: "https://aruma.mysqil.com/",
-				type: "website",
-			},
+		title: "Full-Stack Web Application Launch",
+		date: "2024.11",
+		category: "project",
+		subtitle: "Independent Creation",
+		description:
+			"Designed and built an end-to-end creative workflow application with real-time collaboration and cloud synchronization.",
+		highlights: [
+			"Designed intuitive fluid canvas interface with low-latency interaction",
+			"Built serverless backend APIs with edge caching and relational persistence",
 		],
-		icon: "material-symbols:code",
-		color: "#7C3AED",
-		featured: true,
+		tags: ["Svelte", "Node.js", "PostgreSQL", "Cloudflare"],
+		icon: "material-symbols:deployed-code-outline-rounded",
+	},
+	{
+		title: "Computer Science & Engineering Degree",
+		date: "2020.09 – 2024.06",
+		category: "education",
+		subtitle: "University of Technology",
+		location: "Hangzhou, China",
+		description:
+			"Focused on computer systems, software engineering, human-computer interaction, and distributed architectures.",
+		highlights: [
+			"Graduated with honors and outstanding graduate thesis award",
+			"Led university open source student community and hackathons",
+		],
+		tags: ["Computer Science", "Algorithms", "Software Engineering"],
+		icon: "material-symbols:school-rounded",
+	},
+	{
+		title: "Started Personal Blog & Tech Notes",
+		date: "2022.04",
+		category: "life",
+		subtitle: "First Step into Tech Writing",
+		description:
+			"Published my first article online and began documenting frontend exploration, creative coding, and personal reflections.",
+		tags: ["Blogging", "Writing", "Open Web"],
+		icon: "material-symbols:edit-note-rounded",
 	},
 ];
+
+/** 获取所有时间线数据列表 */
+export function getTimelineList(): TimelineItem[] {
+	return timelineData;
+}
