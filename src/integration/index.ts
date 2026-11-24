@@ -16,7 +16,9 @@ import {
 	TRAILING_SLASH,
 	viteBuildShared,
 } from "../config/integrationsConfig.ts";
+import { ALIAS_NAMESPACES, aliasPattern, THEME_ALIASES } from "./aliases.ts";
 import { buildFontDeclarations } from "./fonts.ts";
+import { indexPagefindDirectory } from "./pagefind.ts";
 import {
 	invalidateConfigCache,
 	loadConfigModule,
@@ -94,14 +96,10 @@ function createAliases(paths: ResolvedShironesPaths) {
 			find: /^@iconify\/svelte$/,
 			replacement: join(src, "components/atoms/display/Icon.svelte"),
 		},
-		{ find: /^@components\//, replacement: `${join(src, "components")}/` },
-		{ find: /^@utils\//, replacement: `${join(src, "utils")}/` },
-		{ find: /^@layouts\//, replacement: `${join(src, "layouts")}/` },
-		{ find: /^@i18n\//, replacement: `${join(src, "i18n")}/` },
-		{ find: /^@constants\//, replacement: `${join(src, "constants")}/` },
-		{ find: /^@assets\//, replacement: `${join(src, "assets")}/` },
-		// Keep `@/` last: it is the broadest pattern.
-		{ find: /^@\//, replacement: `${src}/` },
+		...THEME_ALIASES.map(([prefix, sub]) => ({
+			find: new RegExp(`^${aliasPattern(prefix)}`),
+			replacement: sub ? `${join(src, sub)}/` : `${src}/`,
+		})),
 	];
 }
 
@@ -406,6 +404,8 @@ export function shirones(options: ShironesOptions = {}): AstroIntegration {
 							// inside the package, and listing an unresolvable id makes
 							// Vite log a warning for every one of them on every build.
 							include: prebundleCandidates(paths, prebundleSpecifiers),
+							// Package mode only — see `prebundleExclude`.
+							exclude: prebundleExclude(paths),
 						},
 						// `viteBuildShared` deliberately omits any console-stripping
 						// config: stripping console.log from a user's own code in
@@ -483,13 +483,11 @@ export function shirones(options: ShironesOptions = {}): AstroIntegration {
 				// (workers, exclusions, ...). Indexing here as well would build
 				// the index twice.
 				if (options.pagefind === false || paths.isThemeRepo) return;
-				const outDir = dir.pathname;
 				try {
 					const pagefind = await import("pagefind");
 					const { index } = await pagefind.createIndex({});
 					if (!index) throw new Error("Pagefind failed to create an index");
-					await index.addDirectory({ path: outDir });
-					await index.writeFiles({ outputPath: join(outDir, "pagefind") });
+					await indexPagefindDirectory(dir, index);
 					logger.info("pagefind index generated");
 				} catch (error) {
 					logger.warn(
@@ -527,6 +525,12 @@ export function prebundleCandidates(
 	// dependencies, installed under the root Vite resolves from, so the hint is
 	// both visible and useful.
 	return specifiers;
+}
+
+/** Package mode only: alias imports resolve into `node_modules`, where Vite's
+ * dep scanner would pre-bundle them without the overlay. See pitfalls §1.9. */
+export function prebundleExclude(paths: ResolvedShironesPaths): string[] {
+	return paths.isThemeRepo ? [] : ALIAS_NAMESPACES;
 }
 
 /**
